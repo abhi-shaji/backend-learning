@@ -5,6 +5,7 @@ import { uploadOnCloudinary, deleteOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import { validateHeaderName } from "http";
+import mongoose from "mongoose";
 
 const generateRefreshAndAccessToken = async (userId) => {
   try {
@@ -393,9 +394,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
   ]);
   if (!channel?.length) {
     throw new ApiError(404, "channel does not exists");
-  }
-  console.log(channel);
-  
+  }  
 
   return res
     .status(200)
@@ -404,7 +403,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
     );
 });
 
-const getWatchHostory = asyncHandler(async (req,res) => {
+const getWatchHistory = asyncHandler(async (req,res) => {
   const user = await User.aggregate([
    {
      $match: {
@@ -461,5 +460,6 @@ export {
   updateAccountDetails,
   updateUserAvatar,
   updateUserCoverImage,
-  getUserChannelProfile
+  getUserChannelProfile,
+  getWatchHistory
 };
